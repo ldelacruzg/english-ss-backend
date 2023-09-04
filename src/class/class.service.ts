@@ -15,7 +15,31 @@ export class ClassService {
                 id: true,
                 name: true,
                 students: true,
-                teacher: true
+                teacher: true,
+            }
+        })
+    }
+
+    async getStudentsByClass(classId: number) {
+        return this.prisma.user.findMany({
+            select: {
+                id: true,
+                name: true,
+                student: {
+                    select: {
+                        id: true,
+                        level: true
+                    },
+                    where: {
+                        classId: {
+                            equals: classId
+                        }
+                    }
+                }
+            }, where: {
+                role: {
+                    equals: 'student'
+                }
             }
         })
     }
@@ -59,6 +83,19 @@ export class ClassService {
                 id: true,
                 user: true,
                 classId: true
+            }
+        })
+    }
+
+    async updateStudentLevel(studentId: number, level: number) {
+        return this.prisma.student.update({
+            data: {
+                level: level
+            }, where: {
+                id: studentId
+            }, select: {
+                id: true,
+                level: true
             }
         })
     }

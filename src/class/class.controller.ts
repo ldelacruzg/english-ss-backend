@@ -16,14 +16,24 @@ export class ClassController {
         return this.classService.getTeacherClasses(teacherId);
     }
 
+    @Get('students/:classId')
+    async getStudentsByClasses(@Param('classId', ParseIntPipe) classId: number) {
+        return this.classService.getStudentsByClass(classId);
+    }
+
     @Post('register')
     async createClass(@Body() data: Class) {
         return this.classService.createClass(data);
     }
 
     @Put('updateStudent')
-    async changeStudentClass(@Body() data: { studentId: number, classId, number }) {
+    async changeStudentClass(@Body() data: { studentId: number, classId: number }) {
         return this.classService.changeClass(data.studentId, data.classId);
+    }
+
+    @Put('updateLevel')
+    async updateStudentLevel(@Body() data: { studentId: number, level: number }) {
+        return this.classService.updateStudentLevel(data.studentId, data.level);
     }
 
 }
