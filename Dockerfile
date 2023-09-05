@@ -1,9 +1,10 @@
 FROM node:18-alpine
- 
+
+# RUN mkdir -p /usr/src/app
 WORKDIR /user/src/app
 
 COPY package*.json ./
-COPY . .
+COPY ./src .
 
 # RUN npm install -g prisma
 RUN npm install
